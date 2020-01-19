@@ -60,8 +60,6 @@ def initialization():
 
 	#get list of clients to remove
 	selected_list = select(target.bssid, target.channel, interface, client_list)
-	for i in range(len(selected_list)):
-		print(selected_list[i].station)
 	Color.pl("{B} Starting deAuth request: {W}")
 	time.sleep(1)
 	death(target.bssid, target.channel, interface, selected_list)
@@ -86,7 +84,6 @@ def selectRemoveConnect(BSSID, channel, interface, client_list):
 	selected_list = []	
 	for index in list_index:
 		selected_list.append(client_list[index])
-	print(selected_list)
 	return selected_list
 
 def selectKeepConnected(BSSID, channel, interface, client_list):
